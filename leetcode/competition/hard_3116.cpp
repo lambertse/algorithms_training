@@ -9,6 +9,16 @@ using ll = long long;
 #define MASK(n) ((1 << n) - 1)          //Get mask of n bits
 #define getBit(bit, i) ((bit >> i) & 1) //Get bit i of an bin num
 
+/*Include-exclusion principle:
+    A U B U C = A + B + C - AUB - AUC - CUB + AUBUC;
+*/
+/*
+    Big O:
+        - Binary search log(n)
+        - Cnt function: 2^(coins.size())*coin.size()
+        => Total big O: 2*log*(2^n)*n
+*/
+
 ll cnt(vector<int>& coins, ll x){
     //using Inclusion–exclusion principle
     int coinSize = coins.size();
