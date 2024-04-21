@@ -1,7 +1,7 @@
 //3. Longest substring without repeating character
 #include <iostream>
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class Solution {
@@ -13,25 +13,21 @@ public:
     }
     int lengthOfLongestSubstring(string s) {
         int ret = 0;
-        std::string curMax = "";
+        std::vector<int> map(256,-1);
+        int fstItem = 0;
         int len = s.length();
         for(int i = 0; i < len; i++){
-            auto it = curMax.find(s[i]);
-            if(it == std::string::npos){
-                curMax+=s[i];
+            if(map[s[i]]!=-1 && map[s[i]] >= fstItem){
+                ret = max(ret, i - fstItem);
+                fstItem = map[s[i]] + 1;
             }
-            else{
-                int curlen = curMax.length();
-                if( curlen > ret ) ret = curlen;
-                curMax = curMax.substr(it+1);
-                curMax+=s[i];
-            }
+            map[s[i]] = i;
         }
-        return std::max(int(curMax.length()), ret);
+        return  max(ret, len - 1 - fstItem);
     }
 };
 
 int main(){
     Solution s;
-    std::cout << s.lengthOfLongestSubstring("aabaab!bb");
+    std::cout << s.lengthOfLongestSubstring("aab");
 }
